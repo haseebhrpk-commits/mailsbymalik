@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporary Email Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #4CAF50; color: white; padding: 10px 20px; text-align: center; }
+        .container { padding: 20px; }
+        input[type='text'], button { padding: 10px; margin: 5px 0; width: 100%; } 
+        .inbox { margin-top: 20px; }
+        .email-item { border: 1px solid #ddd; padding: 10px; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Temporary Email Generator</h1>
+    </header>
+    <div class="container">
+        <input type="text" id="tempEmail" readonly placeholder="Generated Email Address">
+        <button id="generateEmail">Generate Temporary Email</button>
+        <h2>Inbox</h2>
+        <div class="inbox" id="inbox">
+            <!-- Emails will be displayed here -->
+        </div>
+    </div>
+    <script>
+        let email = '';
+
+        document.getElementById('generateEmail').addEventListener('click', function() {
+            email = 'user_' + Math.random().toString(36).substring(2, 15) + '@temp-mail.org'; // Simple email generation
+            document.getElementById('tempEmail').value = email;
+        });
+
+        function displayEmailInInbox() {
+            const inbox = document.getElementById('inbox');
+            const emailItem = document.createElement('div');
+            emailItem.classList.add('email-item');
+            emailItem.textContent = email;
+            inbox.appendChild(emailItem);
+        }
+
+        document.getElementById('tempEmail').addEventListener('click', function() {
+            navigator.clipboard.writeText(email).then(() => {
+                alert('Email address copied to clipboard!');
+            });
+            displayEmailInInbox();
+        });
+    </script>
+</body>
+</html>
